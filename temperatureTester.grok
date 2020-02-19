@@ -135,13 +135,13 @@ choose nodes all
 initial head surface elevation
 
 !------------------- Overland Flow Boundary Conditions
-!use domain type
-!surface
+use domain type
+surface
 
-!clear chosen nodes
-!choose nodes all
+clear chosen nodes
+choose nodes all
 
-!initial head surface elevation
+initial head surface elevation
 
 
 !--CRITICAL DEPTH
@@ -242,9 +242,15 @@ end
 
 use domain type
 porous media
+
+!! ------- Simulation control options
+
+flow solver convergence criteria
+1.0e-5
+! default 1x10-10
  
 Newton maximum iterations
-15
+20
 Jacobian epsilon
 1.0d-5
 Newton absolute convergence criteria
@@ -261,16 +267,22 @@ head control
 0.5
 saturation control
 0.050
+
+
+minimum relaxation factor for convergence
+0.8
+
+
 newton iteration control
-10
+20
 maximum timestep
 86400.0 !3600 ! 
 minimum timestep
-30.0
-initial timestep
-30.0
+1.0d-5
+!initial timestep
+!30.0
 maximum timestep multiplier
-20.0
+24.0
 minimum timestep multiplier
 0.5
 
@@ -286,10 +298,10 @@ Generate target times
 !4838400 !8 weeks (2 months)
 !7257600 !12 weeks (3 months)
 !14515200.0 !168 days (24 weeks) (6 months)
-!31536000.0 !1 yr
+31536000.0 !1 yr
 !63072000.0! 2 yrs
 !189216000.0 ! 6 yrs
-315360000.0 !10 yrs
+!315360000.0 !10 yrs
 
 Output times
 !7200 !2 hrs
@@ -316,10 +328,10 @@ Output times
 !9676800 !16 weeks (4 months)
 !12096000 !20 weeks (5 months)
 !14515200 !24 weeks (6 months)
-!31536000.0 ! 1 yr
+31536000.0 ! 1 yr
 !63072000.0 ! 2 yrs
 !189216000 ! 6 yrs
-315360000.0 ! 10 yr
+!315360000.0 ! 10 yr
 
 end
 
@@ -388,14 +400,14 @@ porous media
 clear chosen nodes
 choose nodes all
 
-!initial concentration  
-!10.0				   
+initial concentration  
+11.9				   
 
 ! run the model onnce with initial temp.
 ! on second run, comment out lines 418 & 419 and uncomment lines 421 & 422
 
-restart file for concentrations
-temperatureTestero.cen
+!restart file for concentrations
+!temperatureTestero.cen
 
 !--------------- Boundary Conditions for Heat Transfer
 
