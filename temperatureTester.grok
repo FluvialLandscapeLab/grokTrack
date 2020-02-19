@@ -1,0 +1,492 @@
+test hydrology + heat transfer
+
+end title
+
+!-------------------------- Grid Generation
+generate rectangles interactive
+	grade x
+	0, 1000, 2, 1, 2
+	grade y
+	0, 4, 2, 1, 2 
+	end
+	
+generate layers interactive
+	zone by layer
+	
+	base elevation
+		elevation from xz pairs
+		0.0 10.0
+		1000.0 0.0
+	end
+	end
+	
+	new layer
+		layer name
+		bedrock
+		
+		Elevation from xz pairs
+			0.0 35.0
+			1000.0 25.0
+		end
+		minimum layer thickness
+		25.0
+		uniform sublayering
+		25
+    end
+	
+	new layer
+		layer name
+		alluvium
+		
+		elevation from xz pairs
+			0.0 38.0
+			1000.0 28.0
+		end
+		minimum layer thickness
+		3.0
+		uniform sublayering
+		30
+	end
+	
+end ! generate layers interactive
+end grid generation
+
+!-------------------------- General simulation parameters
+units: kilogram-metre-second
+
+!transient flow
+
+do transport
+
+dual nodes for surface flow
+
+unsaturated
+
+finite difference mode
+
+compute underrelaxation factor
+
+!-------------------------- Overland Flow Properties
+use domain type
+surface
+
+properties file
+abdul.oprops
+
+clear chosen faces
+choose faces top
+
+read properties
+overland flow
+
+!-------------------------- Porous Media Properties
+! bedrock no flow
+use domain type 
+porous media
+
+!clear chosen elements
+!choose zone by layer
+!1,25
+
+!new zone
+!1
+
+properties file
+hydrology_materials.mprops
+
+clear chosen zones
+choose zone number
+1
+
+read properties
+Bedrock
+
+!-- subsurface flow zone
+use domain type
+porous media
+
+!clear chosen elements
+!choose elements by layer
+!26,56
+
+!new zone
+!2
+
+properties file
+hydrology_materials.mprops
+!materials_props_solid_top.mprops
+!simpleOriginalProperties.mprops
+!porousMedium.mprops
+
+clear chosen zones
+choose zone number
+2
+
+read properties
+Porous
+
+!------------------ Initial Conditions
+use domain type
+porous media
+
+clear chosen nodes
+choose nodes all
+
+initial head surface elevation
+
+!------------------- Overland Flow Boundary Conditions
+!use domain type
+!surface
+
+!clear chosen nodes
+!choose nodes all
+
+!initial head surface elevation
+
+
+!--CRITICAL DEPTH
+!clear chosen nodes
+!choose nodes block
+!1000.0 1000.0
+!0.0 4.0
+!0.0 3.0
+
+!write chosen nodes xyz
+!outNodesXYZ.txt
+
+!use domain type
+!surface
+
+!clear chosen nodes
+!choose nodes xyz list
+!outNodesXYZ.txt
+
+!create segment set
+!outlet
+
+!boundary condition
+!    type
+!    critical depth
+    
+!    name
+!    CritDepth_outlet
+    
+!    segment set
+!    outlet
+!end 
+
+!-- RAIN
+clear chosen nodes
+choose nodes top
+
+create face set
+top
+
+boundary condition
+    type
+    rain
+
+    face set
+    top
+
+    time value table
+    0.0		1.0e-15
+    end
+end
+
+!------------------ Subsurface Flow Boundary Conditions
+use domain type
+porous media
+
+clear chosen nodes
+choose nodes block
+0.0 0.0
+0.0 4.0
+10.0 37.5
+
+create node set
+x0
+
+boundary condition
+    type
+    head
+
+    node set
+    x0
+
+    time value table
+	0.0 37.5 
+    end
+end 
+
+clear chosen nodes
+choose nodes block
+1000.0 1000.0
+0.0 4.0
+0.0 27.5
+
+create node set
+x1000
+
+boundary condition
+    type
+    head
+
+    node set
+    x1000
+
+    time value table
+	0.0 27.5
+    end  
+end 
+
+use domain type
+porous media
+ 
+Newton maximum iterations
+15
+Jacobian epsilon
+1.0d-5
+Newton absolute convergence criteria
+1.0d-3
+Newton residual convergence criteria
+1.0d-3
+newton maximum update for head
+100
+newton maximum update for depth
+1
+
+!--------------------- Timestep Controls
+head control
+0.5
+saturation control
+0.050
+newton iteration control
+10
+maximum timestep
+86400.0 !3600 ! 
+minimum timestep
+30.0
+initial timestep
+30.0
+maximum timestep multiplier
+20.0
+minimum timestep multiplier
+0.5
+
+no nodal flow check 
+
+Generate target times
+0.0
+3600.0 ! 1 hr
+1.0
+3600.0
+!604800.0 !7 days
+!2419200.0 ! 1 month
+!4838400 !8 weeks (2 months)
+!7257600 !12 weeks (3 months)
+!14515200.0 !168 days (24 weeks) (6 months)
+31536000.0 !1 yr
+!63072000.0! 2 yrs
+
+Output times
+!7200 !2 hrs
+!14400 !4 hrs
+!21600 !6 hrs
+!28800 !8 hrs
+!36000 !10 hrs
+!43200 !12 hrs
+!64800 !18 hrs
+!86400.0 !24 hrs
+!129600 !36 hrs
+!172848 !48 hrs 
+!259200 !3 days
+!345600 !4 days
+!432000 !5 days
+!518400 !6 days
+!604800.0 !7 days
+!1209600 !2 weeks
+!2419200 !4 weeks
+!3628800 !6 weeks
+!4838400 !8 weeks (2 months)
+!6048000 !10 weeks
+!7257600 !12 weeks (3 months)
+!9676800 !16 weeks (4 months)
+!12096000 !20 weeks (5 months)
+!14515200 !24 weeks (6 months)
+31536000.0 ! 1 yr
+!63072000.0! 2 yrs
+end
+
+! ------------------- Heat Transfer Parameters
+solute
+
+name
+temp
+
+temperature species
+
+end solute
+
+use domain type
+surface
+
+specific heat capacity of water
+4185.0d0
+
+thermal conductivity of water
+0.5d0
+
+mechanical heat dispersion
+
+reference fluid density
+1000.0d0
+
+reference fluid viscosity
+1.124d-3
+
+constant viscosity
+
+
+use domain type
+porous media
+
+specific heat capacity of water
+4185.0d0
+
+thermal conductivity of water
+0.5d0
+
+mechanical heat dispersion
+
+reference fluid density
+1000.0d0
+
+reference fluid viscosity
+1.124d-3
+
+constant viscosity
+
+!---------------- Initial Conditions for Heat Transfer
+use domain type
+surface
+
+clear chosen nodes
+choose nodes all
+
+initial concentration
+10.0
+
+use domain type
+porous media
+
+clear chosen nodes
+choose nodes all
+
+initial concentration  
+10.0				   
+
+! run the model onnce with initial temp.
+! on second run, comment out lines 418 & 419 and uncomment lines 421 & 422
+
+! restart file for concentrations
+! fluxBoundaryTesto.cen
+
+!--------------- Boundary Conditions for Heat Transfer
+
+!-------------------- Subsurface
+use domain type
+porous media
+
+clear chosen nodes
+choose nodes block
+0.0 0.0
+0.0 4.0
+35.0 37.5
+
+specified concentration
+include streamTemp.txt
+
+!------------------------- surface 
+!use domain type
+!surface
+
+!Atmosphere
+!temperature of air
+!include airTemp.txt 
+!density of air
+!1
+!0.0 1.2e0
+!pressure of air
+!1
+!0.0  1.013d5
+!specific heat of air
+!1
+!0.0  7.17d2
+!specific humidity of air
+!1
+!0.0  0.01062d0
+!wind speed
+!1
+!0.0  1.0d0
+!latent heat of vapourization
+!1
+!0.0  2.258d6
+!soil-water suction at surface
+!1
+!0.0  0.138d0
+!incoming shortwave radiation
+!1
+!0.0  1.10d2   !55.0
+!drag coefficient
+!1
+!0.0  2.0d-3
+!cloud cover
+!1
+!0.0  0.5d0
+!relative humidity
+!1
+!0.0  0.75d0
+!end Atmosphere
+
+!----------------------- Time Step Control
+!transport time weighting
+!1.0
+
+concentration control
+0.5
+
+!----------------------- Transport Properties
+use domain type
+porous media
+
+clear chosen zones
+choose zones all
+
+longitudinal dispersivity
+1.0
+transverse dispersivity
+0.1
+vertical transverse dispersivity
+0.1
+
+use domain type
+surface
+
+clear chosen zones
+choose zones all
+
+longitudinal dispersivity
+1.0
+transverse dispersivity
+0.1
+coupling dispersivity
+0.01
+heat coupling length
+0.1
+
+!------------------------ Output
+clear chosen nodes
+choose nodes all
+flux output nodes from chosen
+
