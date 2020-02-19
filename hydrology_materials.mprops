@@ -1,0 +1,65 @@
+Porous
+k anisotropic
+0.00462963
+0.000462963
+0.000462963
+
+longitudinal dispersivity
+1.0
+
+transverse dispersivity
+0.1
+
+vertical transverse dispersivity
+0.1
+
+thermal conductivity of solid
+1.6d0
+
+specific heat capacity of solid
+870
+
+bulk density
+2250.0d0 !3000 is density of the solid
+
+porosity
+0.25d0
+
+relative permeability xy
+
+unsaturated van genuchten functions
+residual saturation
+0.001
+
+alpha
+9.0
+
+end unsaturated functions
+end material
+
+!------------------------------------------
+Bedrock
+
+k isotropic
+1.0d-10
+
+longitudinal dispersivity
+1.0d-20
+
+transverse dispersivity
+1.0d-20
+
+thermal conductivity of solid
+1.6d0
+
+specific heat capacity of solid
+870
+
+bulk density
+3000.0d0
+
+porosity
+1.0d-20
+
+end material
+------------------------------------------
