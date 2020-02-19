@@ -132,9 +132,9 @@ porous media
 clear chosen nodes
 choose nodes all
 
-!initial head surface elevation
-restart file for heads
-temperatureHeadso.hen
+initial head surface elevation
+!restart file for heads
+!temperatureHeadso.hen
 
 !------------------- Overland Flow Boundary Conditions
 !use domain type
@@ -156,12 +156,12 @@ temperatureHeadso.hen
 !write chosen nodes xyz
 !outNodesXYZ.txt
 
-use domain type
-surface
+!use domain type
+!surface
 
-clear chosen nodes
-choose nodes xyz list
-outNodesXYZ.txt
+!clear chosen nodes
+!choose nodes xyz list
+!outNodesXYZ.txt
 
 !create segment set
 !outlet
@@ -177,20 +177,31 @@ outNodesXYZ.txt
 !    outlet
 !end 
 
-create node set
-surface_out
+!create segment set
+!surface_out
 
-boundary condition
-	type
-	simple drain
+! -- simple drain --
+!boundary condition
+!	type
+!	simple drain
 	
-	node set
-	surface_out
+!	node set
+!	surface_out
 	
-	time value table
-	0.0 27.9 1.0e-5
-	end
-end
+!	time value table
+!	0.0 27.9 1.0e-5
+!	end
+!end
+
+!-- zero-depth --
+!boundary condition 
+!	type
+!	zero depth gradient
+
+!	segment set 
+!	surface_out
+!end
+
 	
 
 !-- RAIN
@@ -208,7 +219,7 @@ boundary condition
     top
 
     time value table
-    0.0		6.69e-7
+    0.0		1.0e-15
     end
 end
 
