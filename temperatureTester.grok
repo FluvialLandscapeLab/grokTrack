@@ -151,17 +151,17 @@ temperatureHeadso.hen
 !choose nodes block
 !1000.0 1000.0
 !0.0 4.0
-!0.0 3.0
+!28.0 28.0
 
 !write chosen nodes xyz
 !outNodesXYZ.txt
 
-!use domain type
-!surface
+use domain type
+surface
 
-!clear chosen nodes
-!choose nodes xyz list
-!outNodesXYZ.txt
+clear chosen nodes
+choose nodes xyz list
+outNodesXYZ.txt
 
 !create segment set
 !outlet
@@ -176,6 +176,22 @@ temperatureHeadso.hen
 !    segment set
 !    outlet
 !end 
+
+create node set
+surface_out
+
+boundary condition
+	type
+	simple drain
+	
+	node set
+	surface_out
+	
+	time value table
+	0.0 27.9 1.0e-5
+	end
+end
+	
 
 !-- RAIN
 clear chosen nodes
@@ -192,7 +208,7 @@ boundary condition
     top
 
     time value table
-    0.0		1.0e-15
+    0.0		6.69e-7
     end
 end
 
@@ -294,21 +310,22 @@ minimum timestep multiplier
 
 output times
 !2419200.0 !1 mo
-!31536000.0 !1 yr
+31536000.0 !1 yr
 !63072000.0 !2 yrs
-157680000 !5 yrs
-157680000 
-160272000 
-162864000 
-165456000 
-168048000 
-173232000 
-175824000 
-178416000
-181008000 
-183600000 
-186192000 
-188784000
+
+!157680000 !5 yrs
+!157680000 
+!160272000 
+!162864000 
+!165456000 
+!168048000 
+!173232000 
+!175824000 
+!178416000
+!181008000 
+!183600000 
+!186192000 
+!188784000
 end
 
 
@@ -388,6 +405,38 @@ temperature species
 
 end solute
 
+
+!-- BROOKFIELD
+!use domain type
+!surface
+
+!do heat transfer
+
+!specific heat capacity of water
+!4185.0d0
+
+!thermal conductivity of water
+!0.5d0
+
+!temperature of air
+!1
+!0.0 20.0
+
+!incoming shortwave radiation
+!1
+!0.0 600.0
+
+!mechanical heat dispersion
+
+!surface thin layer control
+!1.0d-5
+
+!end heat transfer
+
+!fluid density
+!1000.0d0
+
+!---- Katie
 use domain type
 surface
 
@@ -450,7 +499,7 @@ choose nodes all
 ! on second run, comment out lines 418 & 419 and uncomment lines 421 & 422
 
 restart file for concentrations
-temperatureTestero_test9.cen
+temperatureTestero_test17.cen
 
 !--------------- Boundary Conditions for Heat Transfer
 
@@ -467,15 +516,23 @@ choose nodes block
 specified concentration
 include streamTemp.txt
 
+!-----------Soil Concentration
+!clear chosen nodes
+!choose nodes top
+
+!specified concentration
+!include soilTemp.txt
+
 !------------------------- surface 
 use domain type
 surface
 
-!Atmosphere
-!temperature of air
+Atmosphere
+
+temperature of air
 !include airTemp.txt 
-!1
-!0.0 20
+1
+0.0 20.0
 !density of air
 !1
 !0.0 1.2e0
@@ -509,7 +566,7 @@ surface
 !relative humidity
 !1
 !0.0  0.75d0
-!end Atmosphere
+end Atmosphere
 
 !----------------------- Time Step Control
 !transport time weighting
