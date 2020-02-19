@@ -132,7 +132,9 @@ porous media
 clear chosen nodes
 choose nodes all
 
-initial head surface elevation
+!initial head surface elevation
+restart file for heads
+temperatureHeadso.hen
 
 !------------------- Overland Flow Boundary Conditions
 !use domain type
@@ -268,8 +270,8 @@ saturation control
 0.050
 
 
-!minimum relaxation factor for convergence
-!0.8
+minimum relaxation factor for convergence
+0.8
 
 
 newton iteration control
@@ -286,26 +288,38 @@ maximum timestep multiplier
 minimum timestep multiplier
 0.5
 
+!target times
+!63072000.0
+!end
+
+output times
+63072000.0
+end
+
+
+
 no nodal flow check 
 
-Generate target times
-0.0
-3600.0 ! 1 hr
-1.0
-3600.0
+
+
+!!!generate target times
+!!!0.0
+!!!3600.0 ! 1 hr
+!!!1.0
+!!!3600.0
 !604800.0 !7 days
 !2419200.0 ! 1 month
 !4838400 !8 weeks (2 months)
 !7257600 !12 weeks (3 months)
 !14515200.0 !168 days (24 weeks) (6 months)
 !31536000.0 !1 yr
-63072000.0! 2 yrs
+!!!63072000.0! 2 yrs
 !94608000.0 ! 3 yrs
 !125712000.0
 !189216000.0 ! 6 yrs
 !315360000.0 !10 yrs
 
-Output times
+!Output times
 !7200 !2 hrs
 !14400 !4 hrs
 !21600 !6 hrs
@@ -331,7 +345,7 @@ Output times
 !12096000 !20 weeks (5 months)
 !14515200 !24 weeks (6 months)
 !31536000.0 ! 1 yr
-63072000.0 ! 2 yrs
+!!!63072000.0 ! 2 yrs
 !94608000.0 ! 3 yrs
 !97200000.0 ! 3y 30d
 !99792000.0 ! 3y 60d
@@ -347,7 +361,7 @@ Output times
 !189216000 ! 6 yrs
 !315360000.0 ! 10 yr
 
-end
+!end
 
 ! ------------------- Heat Transfer Parameters
 solute
@@ -421,7 +435,7 @@ choose nodes all
 ! on second run, comment out lines 418 & 419 and uncomment lines 421 & 422
 
 restart file for concentrations
-temperatureTestero.cen
+temperatureTestero_test9.cen
 
 !--------------- Boundary Conditions for Heat Transfer
 
@@ -515,6 +529,70 @@ coupling dispersivity
 0.01
 heat coupling length
 0.1
+
+
+
+!generate target times
+!0.0
+!3600.0 ! 1 hr
+!1.0
+!3600.0
+!604800.0 !7 days
+!2419200.0 ! 1 month
+!4838400 !8 weeks (2 months)
+!7257600 !12 weeks (3 months)
+!14515200.0 !168 days (24 weeks) (6 months)
+!31536000.0 !1 yr
+!63072000.0! 2 yrs
+!94608000.0 ! 3 yrs
+!125712000.0
+!189216000.0 ! 6 yrs
+!315360000.0 !10 yrs
+
+!Output times
+!7200 !2 hrs
+!14400 !4 hrs
+!21600 !6 hrs
+!28800 !8 hrs
+!36000 !10 hrs
+!43200 !12 hrs
+!64800 !18 hrs
+!86400.0 !24 hrs
+!129600 !36 hrs
+!172848 !48 hrs 
+!259200 !3 days
+!345600 !4 days
+!432000 !5 days
+!518400 !6 days
+!604800.0 !7 days
+!1209600 !2 weeks
+!2419200 !4 weeks
+!3628800 !6 weeks
+!4838400 !8 weeks (2 months)
+!6048000 !10 weeks
+!7257600 !12 weeks (3 months)
+!9676800 !16 weeks (4 months)
+!12096000 !20 weeks (5 months)
+!14515200 !24 weeks (6 months)
+!31536000.0 ! 1 yr
+!63072000.0 ! 2 yrs
+!94608000.0 ! 3 yrs
+!97200000.0 ! 3y 30d
+!99792000.0 ! 3y 60d
+!102384000.0 ! 3y 90d
+!104976000.0 !3y 120d
+!110160000.0 !3y 180d
+!112752000.0 !3y 210d
+!115344000.0 !3y 240d
+!117936000.0 !3y 270d
+!120528000.0 !3y 300d
+!123120000.0 !3y 330d
+!125712000.0 !3y 360d
+!189216000 ! 6 yrs
+!315360000.0 ! 10 yr
+
+!end
+
 
 !------------------------ Output
 clear chosen nodes
