@@ -293,8 +293,22 @@ minimum timestep multiplier
 !end
 
 output times
-!63072000.0
-2419200.0
+!2419200.0 !1 mo
+!31536000.0 !1 yr
+!63072000.0 !2 yrs
+157680000 !5 yrs
+157680000 
+160272000 
+162864000 
+165456000 
+168048000 
+173232000 
+175824000 
+178416000
+181008000 
+183600000 
+186192000 
+188784000
 end
 
 
@@ -457,43 +471,45 @@ include streamTemp.txt
 use domain type
 surface
 
-Atmosphere
-temperature of air
-include airTemp.txt 
-density of air
-1
-0.0 1.2e0
-pressure of air
-1
-0.0  1.013d5
-specific heat of air
-1
-0.0  7.17d2
-specific humidity of air
-1
-0.0  0.01062d0
-wind speed
-1
-0.0  1.0d0
-latent heat of vapourization
-1
-0.0  2.258d6
-soil-water suction at surface
-1
-0.0  0.138d0
-incoming shortwave radiation
-1
-0.0  1.10d2   !55.0
-drag coefficient
-1
-0.0  2.0d-3
-cloud cover
-1
-0.0  0.5d0
-relative humidity
-1
-0.0  0.75d0
-end Atmosphere
+!Atmosphere
+!temperature of air
+!include airTemp.txt 
+!1
+!0.0 20
+!density of air
+!1
+!0.0 1.2e0
+!pressure of air
+!1
+!0.0  1.013d5
+!specific heat of air
+!1
+!0.0  7.17d2
+!specific humidity of air
+!1
+!10.0  0.01062d0
+!wind speed
+!1
+!10.0  1.0d0
+!latent heat of vapourization
+!1
+!0.0  2.258d6
+!soil-water suction at surface
+!1
+!0.0  0.138d0
+!incoming shortwave radiation
+!1
+!0.0  600!1.10d2   !55.0
+!drag coefficient
+!1
+!0.0  2.0d-3
+!cloud cover
+!1
+!0.0  0.5d0
+!relative humidity
+!1
+!0.0  0.75d0
+!end Atmosphere
 
 !----------------------- Time Step Control
 !transport time weighting
@@ -596,7 +612,7 @@ heat coupling length
 
 
 !------------------------ Output
-clear chosen nodes
-choose nodes all
-flux output nodes from chosen
+!clear chosen nodes
+!choose nodes all
+!flux output nodes from chosen
 
