@@ -286,8 +286,10 @@ Generate target times
 !4838400 !8 weeks (2 months)
 !7257600 !12 weeks (3 months)
 !14515200.0 !168 days (24 weeks) (6 months)
-31536000.0 !1 yr
+!31536000.0 !1 yr
 !63072000.0! 2 yrs
+!189216000.0 ! 6 yrs
+315360000.0 !10 yrs
 
 Output times
 !7200 !2 hrs
@@ -314,8 +316,11 @@ Output times
 !9676800 !16 weeks (4 months)
 !12096000 !20 weeks (5 months)
 !14515200 !24 weeks (6 months)
-31536000.0 ! 1 yr
-!63072000.0! 2 yrs
+!31536000.0 ! 1 yr
+!63072000.0 ! 2 yrs
+!189216000 ! 6 yrs
+315360000.0 ! 10 yr
+
 end
 
 ! ------------------- Heat Transfer Parameters
@@ -383,14 +388,14 @@ porous media
 clear chosen nodes
 choose nodes all
 
-initial concentration  
-10.0				   
+!initial concentration  
+!10.0				   
 
 ! run the model onnce with initial temp.
 ! on second run, comment out lines 418 & 419 and uncomment lines 421 & 422
 
-! restart file for concentrations
-! fluxBoundaryTesto.cen
+restart file for concentrations
+temperatureTestero.cen
 
 !--------------- Boundary Conditions for Heat Transfer
 
