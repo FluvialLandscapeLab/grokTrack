@@ -400,14 +400,14 @@ porous media
 clear chosen nodes
 choose nodes all
 
-initial concentration  
-11.9				   
+!initial concentration  
+!11.9				   
 
 ! run the model onnce with initial temp.
 ! on second run, comment out lines 418 & 419 and uncomment lines 421 & 422
 
-!restart file for concentrations
-!temperatureTestero.cen
+restart file for concentrations
+temperatureTestero.cen
 
 !--------------- Boundary Conditions for Heat Transfer
 
