@@ -259,7 +259,7 @@ end
 
 
 clear chosen nodes
-choose nodes top gb
+!choose nodes top gb
 !./gb/grid.nchos.Outlet
 choose nodes block
 1000.0 1000.0
