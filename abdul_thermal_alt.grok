@@ -120,10 +120,10 @@ initial head surface elevation
 use domain type
 surface
 
-clear chosen nodes
-choose nodes top
-initial water depth
-1.0d-4
+!clear chosen nodes
+!choose nodes top
+!initial water depth
+!1.0d-4
 
 !restart file for heads
 !steady.head
@@ -131,52 +131,52 @@ initial water depth
 clear chosen nodes
 !choose nodes top gb
 !./gb/grid.nchos.outlet
-choose nodes block
-1000.0 1000.0
-0.0 4.0
-28.0 28.0
+!choose nodes block
+!1000.0 1000.0
+!0.0 4.0
+!28.0 28.0
 
-create segment set
-outlet
+!create segment set
+!outlet
 
-boundary condition
-    type
-    critical depth
+!boundary condition
+!    type
+!    critical depth
     
-    name
-    CritDepth_outlet
+!    name
+!    CritDepth_outlet
     
-    segment set
-    outlet
+!    segment set
+!    outlet
 
-end 
+!end 
 
-clear chosen nodes
-choose nodes block
-0.0 1000.0
-0.0 0.0
-28.0 38.0
+!clear chosen nodes
+!choose nodes block
+!0.0 1000.0
+!0.0 0.0
+!28.0 38.0
 
-choose nodes block
-0.0 1000.0
-4.0 4.0
-28.0 38.0
+!choose nodes block
+!0.0 1000.0
+!4.0 4.0
+!28.0 38.0
 
-create segment set
-non_outlet
+!create segment set
+!non_outlet
 
 
-boundary condition
-    type
-    critical depth
+!boundary condition
+!    type
+!    critical depth
     
-    name
-    CritDepth_rest
+!    name
+!    CritDepth_rest
     
-    segment set
-    non_outlet
+!    segment set
+!    non_outlet
 
-end ! flux bc
+!end ! flux bc
 
 clear chosen nodes
 choose nodes top
