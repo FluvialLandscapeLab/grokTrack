@@ -236,15 +236,7 @@ flow solver maximum iterations
 1000
 
 output times
-  0.0001
-  1
-   10
-   1e2
-   1e3
-   1e4
-   1e5 
-   1e6
-   1e7
+	2592000
 end
 
 !--------------------------  Output
@@ -406,7 +398,7 @@ transport time weighting
 1.0
 
 concentration control
-0.1
+9.0
 
 !----------------------- Transport properties
 use domain type
