@@ -1,0 +1,628 @@
+Upstream, surface and bedrock boundaries, with vertical seepage.
+
+end title
+
+!--------------------------  grid generation
+
+Generate rectangles interactive
+	grade x
+	0, 1000, 1, 1, 1
+	grade y
+	0, 2, 1, 1, 1
+	end
+	
+generate layers interactive
+	zone by layer
+	base elevation
+	Elevation from xz pairs
+	0.0 10.0
+	1000.0 0.0
+	end
+	end
+
+	new layer
+	Elevation from xz pairs
+	0.0 35.0
+	1000.0 25.0
+	end
+    uniform sublayering
+    25
+    end
+	
+	new layer
+	Elevation from xz pairs
+	0.0 40.0
+	1000.0 30.0
+	end
+    uniform sublayering
+    5
+    end
+
+end ! generate layers interactive
+end grid generation
+
+!--------------------------  General simulation parameters
+units: kilogram-metre-second
+
+transient flow
+
+dual nodes for surface flow
+
+! This is optional, model give same results and runs for the same time
+! either way.  Comment to disable.
+finite difference mode
+
+! I don't know why this call is here, I copied Andrea's code
+! and it was in here's so I emulated it.
+compute underrelaxation factor
+
+!--------------------------  Overland flow properties
+! overland flow zone
+use domain type
+surface
+
+clear chosen faces
+choose faces top
+
+! Each domain (porous media, surface, etc has it's own zone number set
+new zone
+1
+
+! VanGenuchten functions and other overland flow properies set in this file.
+properties file
+abdul.oprops
+
+clear chosen zones
+choose zone number
+1
+
+read properties
+overland flow
+
+!--------------------------  porous media properties
+! bedrock
+use domain type
+porous media
+
+properties file
+porousMedium.mprops
+
+! These zone numbers were set when the mesh was generated above
+! NB: number starts at bottom and increases upward
+clear chosen zones
+!choose zones all
+choose zone number
+1
+
+read properties
+bedrock
+
+! alluvium
+use domain type
+porous media
+
+properties file
+porousMedium.mprops
+
+clear chosen zones
+!choose zones all
+choose zone number
+2
+
+read properties
+alluvium
+
+!--------------------------  Overland flow
+
+use domain type
+surface
+
+clear chosen nodes
+choose nodes xyz list
+outletNodesXYZ.txt
+
+create segment set
+outlet
+
+boundary condition
+    type
+    critical depth
+    
+    name
+    CritDepth_outlet
+    
+    segment set
+    outlet
+
+end ! flux bc
+
+clear chosen nodes
+choose nodes top
+
+create face set
+top
+
+boundary condition
+
+    type
+    rain
+
+    face set
+    top
+
+    time value table
+    0.0		1.0e-15
+    end
+    
+end ! flux bc
+
+!--------------------------  boundary conditions for subsurface flow
+use domain type
+porous media
+
+clear chosen nodes
+choose nodes all
+
+! Initial head surface elevation
+
+! Alternately, you can set initial head with output from a model
+! with the same grid domain to get the model to spin up easier
+! Here, I'm using a file from an earlier run of this model,
+! but it can be another model with the same mesh.
+Initial head from output file 
+fluxBoundaryTesto.head_pm.0109
+
+clear chosen nodes
+choose nodes x plane
+0.0d0
+1.0d-1
+
+Write chosen nodes xyz
+usNodesXYZ.txt
+
+clear chosen nodes
+choose nodes xyz list
+usNodesXYZ.txt
+
+create node set
+x0
+
+boundary condition
+    type
+    head
+
+    node set
+    x0
+
+    time value table
+	0.0 39.0d0
+    end
+    
+end ! new specified head
+
+clear chosen nodes
+choose nodes x plane
+1000.0d0
+1.0d-1
+
+Write chosen nodes xyz
+dsNodesXYZ.txt
+
+clear chosen nodes
+choose nodes xyz list
+dsNodesXYZ.txt
+
+create node set
+x1000
+
+boundary condition
+    type
+    head
+
+    node set
+    x1000
+
+    time value table
+	0.0 29.0d0
+    end
+    
+end ! new specified head
+
+use domain type
+porous media
+
+Newton maximum iterations
+15
+Jacobian epsilon
+1.0d-5
+Newton absolute convergence criteria
+1.0d-3
+Newton residual convergence criteria
+1.0d-3
+newton maximum update for head
+100
+newton maximum update for depth
+1
+
+! This was copied from Andrea's code
+! when it is set, the model seems to run faster.
+no nodal flow check
+
+!_______________________ heat transfer parameters
+use domain type
+surface
+
+specific heat capacity of water
+4185.0d0
+
+thermal conductivity of water
+0.5d0
+
+mechanical heat dispersion
+
+reference fluid density
+1000.0d0
+reference fluid viscosity
+1.124d-3
+
+constant viscosity
+
+solute
+
+name
+temperature
+
+temperature species
+
+end solute
+
+!_______________________ initial conditions for heat transfer
+! note that I set initial conditions for each domain seperately
+use domain type
+surface
+
+clear chosen nodes
+choose nodes all
+
+initial concentration
+10.5d0
+
+use domain type
+porous media
+
+clear chosen nodes
+choose nodes all
+
+! initial concentration
+! 10.5d0
+
+restart file for concentrations
+fluxBoundaryTesto.cen
+
+!_______________________ boundary conditions for heat transfer
+! similarlarly, BC set for each domain seperately
+!-------------------- subsurface
+
+use domain type
+porous media
+
+clear chosen nodes
+choose nodes xyz list
+tempBoundaryXYZ.txt
+
+specified concentration
+include specConc.txt
+
+! clear chosen nodes
+! choose nodes bottom
+! specified concentration
+! 1
+! 0.0  1e30  10
+
+!------------------------- surface 
+use domain type
+surface
+
+Atmosphere
+temperature of air
+include airConc.txt
+density of air
+1
+0.0 1.2e0
+pressure of air
+1
+0.0  1.013d5
+specific heat of air
+1
+0.0  7.17d2
+specific humidity of air
+1
+0.0  0.01062d0
+wind speed
+1
+0.0  1.0d0
+latent heat of vapourization
+1
+0.0  2.258d6
+soil-water suction at surface
+1
+0.0  0.138d0
+incoming shortwave radiation
+1
+0.0  1.10d2   !55.0
+drag coefficient
+1
+0.0  2.0d-3
+cloud cover
+1
+0.0  0.5d0
+relative humidity
+1
+0.0  0.75d0
+end Atmosphere
+
+! turning these off seems to help things run smoother.
+!----------------------- Time step control
+! transport time weighting
+! 1.0
+
+! concentration control
+! 0.1
+
+!-----------------------Matrix Solver
+! see Section 2.5.1.2 Matrix Solver 
+! red black solver is evidently better for smoothly varying boundaries,
+! like air temperature for instance
+Red black reduction
+
+!----------------------- Transport properties
+! Transport properties set seperately for each domain
+use domain type
+porous media
+
+clear chosen zones
+choose zones all
+longitudinal dispersivity
+1.0
+transverse dispersivity
+0.1
+vertical transverse dispersivity
+0.1
+
+use domain type
+surface
+clear chosen zones
+choose zones all
+longitudinal dispersivity
+1.0
+transverse dispersivity
+0.1
+coupling dispersivity
+0.01
+heat coupling length
+0.1
+
+
+!--------------------------  Timestep controls
+! head control
+! 0.5
+! saturation control
+! 0.050
+newton iteration control
+20
+maximum timestep
+86400.0 !3600 ! 
+minimum timestep
+1.0d-5
+maximum timestep multiplier
+2.0
+minimum timestep multiplier
+0.5
+
+generate target times
+0.0
+36.0d0
+2.0
+86400.0d0
+315360000.0d0
+
+output times
+91929600
+92534400
+93139200
+93744000
+94348800
+94953600
+95558400
+96163200
+96768000
+97372800
+97977600
+98582400
+99187200
+99792000
+100396800
+101001600
+101606400
+102211200
+102816000
+103420800
+104025600
+104630400
+105235200
+105840000
+106444800
+107049600
+107654400
+108259200
+108864000
+109468800
+110073600
+110678400
+111283200
+111888000
+112492800
+113097600
+113702400
+114307200
+114912000
+115516800
+116121600
+116726400
+117331200
+117936000
+118540800
+119145600
+119750400
+120355200
+120960000
+121564800
+122169600
+122774400
+123379200
+123984000
+124588800
+125193600
+125798400
+126403200
+127008000
+127612800
+128217600
+128822400
+129427200
+130032000
+130636800
+131241600
+131846400
+132451200
+133056000
+133660800
+134265600
+134870400
+135475200
+136080000
+136684800
+137289600
+137894400
+138499200
+139104000
+139708800
+140313600
+140918400
+141523200
+142128000
+142732800
+143337600
+143942400
+144547200
+145152000
+145756800
+146361600
+146966400
+147571200
+148176000
+148780800
+149385600
+149990400
+150595200
+151200000
+151804800
+152409600
+153014400
+153619200
+154224000
+154828800
+155433600
+156038400
+156643200
+157248000
+end
+
+!------------------------ Output
+clear chosen nodes
+clear chosen nodes
+choose nodes x plane
+1000.0d0
+1.0d-1
+Flux output nodes from chosen
+
+
+Make observation point
+well_0
+0.0 1.0 37.0
+
+Make observation point
+well_10
+10.0 1.0 36.91
+
+Make observation point
+well_20
+20.0 1.0 36.81
+
+Make observation point
+well_30
+30.0 1.0 36.71
+
+Make observation point
+well_40
+40.0 1.0 36.61
+
+Make observation point
+well_50
+50.0 1.0 36.51
+
+Make observation point
+well_60
+60.0 1.0 36.41
+
+Make observation point
+well_70
+70.0 1.0 36.31
+
+Make observation point
+well_80
+80.0 1.0 36.21
+
+Make observation point
+well_90
+90.0 1.0 36.11
+
+Make observation point
+well_100
+100.0 1.0 36.01
+
+Make observation point
+well_200
+200.0 1.0 35.01
+
+Make observation point
+well_300
+300.0 1.0 34.01
+
+Make observation point
+well_400
+400.0 1.0 33.01
+
+Make observation point
+well_500
+500.0 1.0 32.01
+
+Make observation point
+well_600
+600.0 1.0 31.01
+
+Make observation point
+well_700
+700.0 1.0 30.01
+
+Make observation point
+well_800
+800.0 1.0 29.01
+
+Make observation point
+well_900
+900.0 1.0 28.01
+
+Make observation point
+well_1000
+1000.0 1.0 27.01
