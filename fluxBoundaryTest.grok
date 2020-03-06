@@ -117,9 +117,12 @@ alluvium
 use domain type
 surface
 
-clear chosen nodes
-choose nodes xyz list
-outletNodesXYZ.txt
+! clear chosen nodes
+! choose nodes xyz list
+! outletNodesXYZ.txt
+
+! Alternately, you can choose nodes around the entire edge of the domain to drain
+Choose nodes top boundary
 
 create segment set
 outlet
