@@ -63,12 +63,14 @@ use domain type
 porous media
 
 properties file
-abdul.mprops
+!abdul.mprops
+PorousMedium_bea.mprops
 
 clear chosen zones
 choose zones all
 read properties
-BORDEN SAND (FIELD SCALE) - DIGITIZED
+!BORDEN SAND (FIELD SCALE) - DIGITIZED
+alluvium
 
 finite difference mode
 
