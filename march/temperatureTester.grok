@@ -219,7 +219,7 @@ boundary condition
     top
 
     time value table
-    0.0		1.0e-8
+    0.0		1.0e-9
     end
 end
 
