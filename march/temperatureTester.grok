@@ -504,17 +504,17 @@ initial concentration
 !--------------- Boundary Conditions for Heat Transfer
 
 !-------------------- Subsurface
-!use domain type
-!porous media
+use domain type
+porous media
 
-!clear chosen nodes
-!choose nodes block
-!0.0 0.0
-!0.0 4.0
-!35.0 37.5
+clear chosen nodes
+choose nodes block
+0.0 0.0
+0.0 4.0
+35.0 37.5
 
-!specified concentration
-!include streamTemp.txt
+specified concentration
+include streamTemp.txt
 
 !-----------Soil Concentration
 !use domain type
