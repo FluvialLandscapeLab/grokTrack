@@ -468,11 +468,11 @@ porous media
 clear chosen nodes
 choose nodes all
 
-!initial concentration  
-!11.9				   
+initial concentration  
+11.9				   
 
-restart file for concentrations
-temperatureTestero_test17.cen
+!restart file for concentrations
+!temperatureTestero_test17.cen
 
 !--------------- Boundary Conditions for Heat Transfer
 
@@ -500,12 +500,12 @@ include streamTemp.txt
 use domain type
 surface
 
-Atmosphere
+!Atmosphere
 
-temperature of air
+!temperature of air
 !include airTemp.txt 
-1
-0.0 20.0
+!1
+!0.0 20.0
 !density of air
 !1
 !0.0 1.2e0
@@ -539,14 +539,14 @@ temperature of air
 !relative humidity
 !1
 !0.0  0.75d0
-end Atmosphere
+!end Atmosphere
 
 !----------------------- Time Step Control
 !transport time weighting
 !1.0
 
 concentration control
-0.5
+9.0
 
 !----------------------- Transport Properties
 use domain type
