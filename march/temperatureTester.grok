@@ -123,7 +123,8 @@ choose zone number
 2
 
 read properties
-ByronPorous
+!ByronPorous
+Porous
 
 !------------------ Initial Conditions
 use domain type
