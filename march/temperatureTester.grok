@@ -48,6 +48,18 @@ generate layers interactive
 		30
 	end
 	
+	new layer
+		layer name
+		soil
+		
+		elevation from xz pairs
+			0.0 38.1
+			1000.0 28.1
+		end
+		minimum layer thickness
+		0.1
+	end
+	
 end ! generate layers interactive
 end grid generation
 
@@ -124,6 +136,20 @@ choose zone number
 
 read properties
 !ByronPorous
+Porous
+
+!--- Soil surface 
+use domain type
+porous media
+
+properties file
+hydrology_materials.mprops
+
+clear chosen zones
+choose zone number
+3
+
+read properties
 Porous
 
 !------------------ Initial Conditions
