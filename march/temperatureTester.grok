@@ -503,9 +503,9 @@ surface
 Atmosphere
 
 temperature of air
-include airTemp.txt 
-!1
-!0.0 20.0
+!include airTemp.txt 
+1
+0.0 20.0
 !density of air
 !1
 !0.0 1.2e0
