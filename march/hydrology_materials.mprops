@@ -1,0 +1,124 @@
+Porous
+k anisotropic
+! 100 meters/day
+0.001157407
+0.0001157407
+0.0001157407
+
+! 400 meters/day
+!0.00462963
+!0.000462963
+!0.000462963
+
+longitudinal dispersivity
+1.0
+
+transverse dispersivity
+0.1
+
+vertical transverse dispersivity
+0.1
+
+thermal conductivity of solid
+1.6d0
+
+specific heat capacity of solid
+870
+
+bulk density
+2250.0d0 !3000 is density of the solid
+
+porosity
+0.25d0
+
+relative permeability xy
+
+unsaturated van genuchten functions
+residual saturation
+0.05
+
+alpha
+9.0
+
+end unsaturated functions
+end material
+
+!------------------------------------------
+Bedrock
+
+k isotropic
+1.0d-10
+
+longitudinal dispersivity
+1.0d-20
+
+transverse dispersivity
+1.0d-20
+
+thermal conductivity of solid
+1.6d0
+
+specific heat capacity of solid
+870
+
+bulk density
+3000.0d0
+
+porosity
+1.0d-20
+
+end material
+!------------------------------------------
+
+ByronPorous
+
+k anisotropic
+0.001157407
+0.0001157407
+0.0001157407
+
+longitudinal dispersivity
+1.0
+
+transverse dispersivity
+0.1
+
+vertical transverse dispersivity
+0.1
+
+thermal conductivity of solid
+1.6d0
+
+specific heat capacity of solid
+840d0
+
+bulk density
+2250.0d0 !3000 is density of the solid
+
+porosity
+0.25d0
+
+!unsaturated van genuchten functions
+
+unsaturated van genuchten functions
+    alpha
+    2.20
+    beta
+    1.72
+    residual saturation
+    0.33
+
+    minimum relative permeability
+    1e-19
+
+    table smoothness factor
+    1e-1
+
+    table minimum pressure
+    -100.
+
+    generate tables from unsaturated functions
+
+end ! functions
+
+end !material
