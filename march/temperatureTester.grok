@@ -477,17 +477,17 @@ initial concentration
 !--------------- Boundary Conditions for Heat Transfer
 
 !-------------------- Subsurface
-use domain type
-porous media
+!use domain type
+!porous media
 
-clear chosen nodes
-choose nodes block
-0.0 0.0
-0.0 4.0
-35.0 37.5
+!clear chosen nodes
+!choose nodes block
+!0.0 0.0
+!0.0 4.0
+!35.0 37.5
 
-specified concentration
-include streamTemp.txt
+!specified concentration
+!include streamTemp.txt
 
 !-----------Soil Concentration
 !clear chosen nodes
@@ -500,10 +500,10 @@ include streamTemp.txt
 use domain type
 surface
 
-!Atmosphere
+Atmosphere
 
-!temperature of air
-!include airTemp.txt 
+temperature of air
+include airTemp.txt 
 !1
 !0.0 20.0
 !density of air
@@ -539,7 +539,7 @@ surface
 !relative humidity
 !1
 !0.0  0.75d0
-!end Atmosphere
+end Atmosphere
 
 !----------------------- Time Step Control
 !transport time weighting
