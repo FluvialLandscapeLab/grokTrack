@@ -35,7 +35,7 @@ relative permeability xy
 
 unsaturated van genuchten functions
 residual saturation
-0.05
+0.1
 
 alpha
 9.0
