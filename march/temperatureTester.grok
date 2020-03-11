@@ -491,22 +491,27 @@ initial concentration
 !include streamTemp.txt
 
 !-----------Soil Concentration
-!clear chosen nodes
-!choose nodes top
+!use domain type
+!surface
 
-!specified concentration
-!include soilTemp.txt
+clear chosen nodes
+choose nodes top
+
+specified concentration
+!1
+!0.0 20.0
+include soilTemp.txt
 
 !------------------------- surface 
-use domain type
-surface
+!use domain type
+!surface
 
-Atmosphere
+!Atmosphere
 
-temperature of air
+!temperature of air
 !include airTemp.txt 
-1
-0.0 20.0
+!1
+!0.0 20.0
 !density of air
 !1
 !0.0 1.2e0
@@ -540,7 +545,7 @@ temperature of air
 !relative humidity
 !1
 !0.0  0.75d0
-end Atmosphere
+!end Atmosphere
 
 !----------------------- Time Step Control
 !transport time weighting
