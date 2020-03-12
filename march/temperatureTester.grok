@@ -30,8 +30,26 @@ generate layers interactive
 		end
 		minimum layer thickness
 		25.0
-		uniform sublayering
-		25
+		!uniform sublayering
+		!25
+		proportional sublayering
+		16
+		0.5
+		0.5
+		0.5
+		1
+		1
+		1
+		1
+		1
+		1
+		1
+		2
+		2
+		2
+		2
+		3
+		3
     end
 	
 	new layer
@@ -378,9 +396,9 @@ minimum timestep multiplier
 
 output times
 !2419200.0 !1 mo
-!31536000.0 !1 yr
+31536000.0 !1 yr
 !63072000.0 !2 yrs
-189216000.0 ! 6 yrs
+!189216000.0 ! 6 yrs
 
 !157680000 !5 yrs
 !157680000 
