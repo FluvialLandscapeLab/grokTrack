@@ -258,7 +258,7 @@ clear chosen nodes
 choose nodes block
 0.0 0.0
 0.0 4.0
-10.0 37.5
+10.0 37.0
 
 !create face set
 !x0faces
@@ -274,7 +274,7 @@ boundary condition
     x0
 
     time value table
-	0.0 37.5 
+	0.0 37.0
     end
 end 
 
@@ -294,7 +294,7 @@ clear chosen nodes
 choose nodes block
 1000.0 1000.0
 0.0 4.0
-0.0 27.5
+0.0 27.0
 
 !create face set
 !x1000faces
@@ -310,7 +310,7 @@ boundary condition
     x1000
 
     time value table
-	0.0 27.5
+	0.0 27.0
     end  
 end 
 
